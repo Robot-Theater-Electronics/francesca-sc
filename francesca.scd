@@ -24,8 +24,20 @@
 //////// choosing the sample:
 ~funcs['a'][2] = {PZ_layer(~bass, ~buffers['db'][4], 1).rhythm(4)};
 
+//////// modulating the frequency with new sampler:
+//// MATHS NOTE: The interval of semitones has ratio 2**x/12 (2 to the power of: x divided by 12)
+///// parameters are: audio buffer, amp, channel, transposition, sample duration in seconds
+~funcs['a'][0] = {PZ_layer(~transposer, ~buffers['db'][4], 1, 0, 1, 1).rhythm(4)}; // normal
+~funcs['a'][1] = {PZ_layer(~transposer, ~buffers['db'][4], 1, 1, 3/2, 1).rhythm(4)}; // 5th up
+// dominant chord arpeggio example:
+~semitones = Pseq([0, 4, 7, 10, 12], inf).asStream;
+b.beats = 1;
+~funcs['b'][0] = {PZ_layer(~transposer, ~buffers['db'][4], 1, [0,1].choose, (2**(~semitones.next/12)).postln, 1).rhythm([1])};
+
+
 // stop all
 ~funcs['a'].do{|f, i| ~funcs['a'][i] = ();}
+~funcs['b'].do{|f, i| ~funcs['b'][i] = ();}
 
 //////////////////////////////////
 /// RADIO FREQUENCIES
@@ -33,11 +45,11 @@
 x = Synth(\sampleNarcodeStr, [\buf, ~buffers['radio1'], \gap, 0, \rl, 1, \loop, 1, \rate, 1, \pos, 0.3]);
 x.release;
 
-x = ~sampler.(~buffers['radio2'], loop:1, gap:0, sust:0);
-x.set(\gap, 4, \at, 0.2, \rl, 0.01, \sust, 0);
+x = ~sampler.(~buffers['radio'][1], loop:1, gap:0, sust:0);
+x.set(\gap, 4, \at, 0.2, \rl, 0.01, \sust, 0, \rate, 1);
 x.release(1); //stop
 
-y = ~sampler.(~buffers['radio1'], loop:1, gap:0, sust:0);
+y = ~sampler.(~buffers['radio'][2], loop:1, gap:0, sust:0);
 y.set(\gap, 0.2, \at, 0, \rl, 0.2, \sust, 0, \amp, 4);
 y.release //stop
 
