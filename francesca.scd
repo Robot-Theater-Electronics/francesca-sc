@@ -9,14 +9,21 @@
 // DOUBLEBASS
 //////////////////////////////////
 
-// minimal version:
+// minimal version dbs (dark bass tones):
+~funcs['a'][0] = {PZ_layer(~bass_random_dbs).rhythm([4])};
+
+// minimal version dbsl (bright bass tones):
+~funcs['a'][0] = {PZ_layer(~bass_random_dbsl).rhythm([1])};
+
+// minimal version (other):
 ~funcs['a'][0] = {PZ_layer(~bass_random).rhythm([2])};
 
 // more rhythm (1 sample played each beat):
 ~funcs['a'][0] = {PZ_layer(~bass_random).rhythm(1,1, 1,1)};
 
 // more rhythm (more complex rhythm):
-~funcs['a'][0] = {PZ_layer(~bass_random).rhythm(1,[2],1,[2], [3], 1, [4])}; // francesca 3
+~funcs['a'][0] = {PZ_layer(~bass_random).rhythm(1,[2],1,[2])}; // francesca 3
+~funcs['a'][1] = {PZ_layer(~bass_random).rhythm(1,[2],1,[2])}; // francesca 3
 
 // play noise samples
 ~funcs['a'][1] = {PZ_layer(~alarmclock).rhythm([3], 3, [3], 1)};
@@ -32,9 +39,10 @@
 // dominant chord arpeggio example:
 ~semitones = Pseq([0, 4, 7, 10, 12], inf).asStream;
 b.beats = 1;
-~funcs['b'][0] = {PZ_layer(~transposer, ~buffers['db'][4], 1, [0,1].choose, (2**(~semitones.next/12)).postln, 1).rhythm([1])};
+~funcs['b'][0] = {PZ_layer(~transposer, ~buffers['db'][(1..8).choose], 1, (0..1).choose, (2**(1/12)), 2).rhythm([1])};
 
-
+t=TempoClock.default
+t.tempo=60/60
 // stop all
 ~funcs['a'].do{|f, i| ~funcs['a'][i] = ();}
 ~funcs['b'].do{|f, i| ~funcs['b'][i] = ();}

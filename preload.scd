@@ -6,6 +6,12 @@ s.waitForBoot{
 		~buffers['db'] = ();
 		~buffers['radio'] = ();
 		~buffers['sax'] = ();
+		~buffers['dbp'] = ();
+		~buffers['dbs'] = ();
+		~buffers['dbsl'] = ();
+		~buffers['dbplukk'] = ();
+		~buffers['dbj'] = ();
+
 		2.do{|i|
 			var index=i+1;
 			~buffers['radio'][index] = Buffer.read(s, ~path_samples ++ "radio" ++index++".wav");
@@ -18,9 +24,31 @@ s.waitForBoot{
 			var index=i+1;
 			~buffers['sax'][index] = Buffer.read(s, ~path_samples ++ "sax"++index++".wav");
 		};
+		7.do{|i|
+			var index=i+1;
+			~buffers['dbp'][index] = Buffer.read(s, ~path_samples ++ "dbp"++index++".wav");
+		};
+		9.do{|i|
+			var index=i+1;
+			~buffers['dbs'][index] = Buffer.read(s, ~path_samples ++ "dbs"++index++".wav");
+		};
+		8.do{|i|
+			var index=i+1;
+			~buffers['dbsl'][index] = Buffer.read(s, ~path_samples ++ "dbsl"++index++".wav");
+		};
+		22.do{|i|
+			var index=i+1;
+			~buffers['dbplukk'][index] = Buffer.read(s, ~path_samples ++ "dbplukk"++index++".wav");};
+		15.do{|i|
+			var index=i+1;
+			~buffers['dbj'][index] = Buffer.read(s, ~path_samples ++ "dbj"++index++".wav");
+
 		~buffers['voice_msg_start'] = Buffer.read(s, ~path_samples ++ "voice_message_start.wav");
 		~buffers['voice_msg_end'] = Buffer.read(s, ~path_samples ++ "voice_message_end.wav");
 );
+
+	t=TempoClock.default;
+	s.sync;
 
 // chord progressions:
 (
@@ -69,6 +97,12 @@ s.sync;
 // synth functions
 s.sync;
 ~bass = {|buf, chan=0| {PlayBuf.ar(1, buf, 1, doneAction: 2)}.play(s, chan) };
+
+~bass_random_dbs = { {PlayBuf.ar(1, ~buffers['dbs'][(1..9).choose], 1, doneAction: 2)}.play(s, (0..9).choose) };
+
+~bass_random_dbsl = { {PlayBuf.ar(1, ~buffers['dbsl'][(1..8).choose], 1, doneAction: 2)}.play(s, (0..8).choose) };
+
+~bass_random = { {PlayBuf.ar(1, ~buffers['dbplukk'][(1..22).choose], 1, doneAction: 2)}.play(s, (0..9).choose) };
 
 		~transposer = {|buf, amp=1, chan=0, transposition=1, time=1| {PitchShift.ar(PlayBuf.ar(1, buf, 1, doneAction: 2), [0.12,0.1], transposition, 0, 0.001).sum * amp* EnvGen.kr(Env.linen(sustainTime:time))}.play(s, chan) };
 
