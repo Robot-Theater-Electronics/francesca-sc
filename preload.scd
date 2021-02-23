@@ -42,11 +42,10 @@ s.waitForBoot{
 		15.do{|i|
 			var index=i+1;
 			~buffers['dbj'][index] = Buffer.read(s, ~path_samples ++ "dbj"++index++".wav");
-
+		};
 		~buffers['voice_msg_start'] = Buffer.read(s, ~path_samples ++ "voice_message_start.wav");
 		~buffers['voice_msg_end'] = Buffer.read(s, ~path_samples ++ "voice_message_end.wav");
 );
-
 	t=TempoClock.default;
 	s.sync;
 
@@ -104,7 +103,7 @@ s.sync;
 
 ~bass_random = { {PlayBuf.ar(1, ~buffers['dbplukk'][(1..22).choose], 1, doneAction: 2)}.play(s, (0..9).choose) };
 
-		~transposer = {|buf, amp=1, chan=0, transposition=1, time=1| {PitchShift.ar(PlayBuf.ar(1, buf, 1, doneAction: 2), [0.12,0.1], transposition, 0, 0.001).sum * amp* EnvGen.kr(Env.linen(sustainTime:time))}.play(s, chan) };
+~transposer = {|buf, amp=1, chan=0, transposition=1, time=1| {PitchShift.ar(PlayBuf.ar(1, buf, 1, doneAction: 2), [0.12,0.1], transposition, 0, 0.001).sum * amp* EnvGen.kr(Env.linen(sustainTime:time))}.play(s, chan) };
 
 ~bass_random = { {PlayBuf.ar(1, ~buffers['db'][(1..8).choose], 1, doneAction: 2)}.play(s, (0..7).choose) };
 
@@ -181,5 +180,3 @@ s.sync;
 	s.sync;
 	"Preload complete".postln;
 }
-
-

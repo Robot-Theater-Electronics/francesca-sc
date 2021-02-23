@@ -34,15 +34,15 @@
 //////// modulating the frequency with new sampler:
 //// MATHS NOTE: The interval of semitones has ratio 2**x/12 (2 to the power of: x divided by 12)
 ///// parameters are: audio buffer, amp, channel, transposition, sample duration in seconds
-~funcs['a'][0] = {PZ_layer(~transposer, ~buffers['db'][4], 1, 0, 1, 1).rhythm(4)}; // normal
+~funcs['a'][0] = {PZ_layer(~transposer, ~buffers['db'][4], 1, 0, 1, 3).rhythm(4)}; // normal
 ~funcs['a'][1] = {PZ_layer(~transposer, ~buffers['db'][4], 1, 1, 3/2, 1).rhythm(4)}; // 5th up
 // dominant chord arpeggio example:
 ~semitones = Pseq([0, 4, 7, 10, 12], inf).asStream;
 b.beats = 1;
-~funcs['b'][0] = {PZ_layer(~transposer, ~buffers['db'][(1..8).choose], 1, (0..1).choose, (2**(1/12)), 2).rhythm([1])};
+~funcs['b'][0] = {PZ_layer(~transposer, ~buffers['dbj'][(9..15).choose], 1, (0..1).choose, (1**(1/12)), 1).rhythm(1)};
 
 t=TempoClock.default
-t.tempo=60/60
+t.tempo=400/60
 // stop all
 ~funcs['a'].do{|f, i| ~funcs['a'][i] = ();}
 ~funcs['b'].do{|f, i| ~funcs['b'][i] = ();}
