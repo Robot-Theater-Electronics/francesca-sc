@@ -13,7 +13,7 @@
 ~funcs['a'][0] = {PZ_layer(~bass_random_dbs).rhythm([4])};
 
 // minimal version dbsl (bright bass tones):
-~funcs['a'][0] = {PZ_layer(~bass_random_dbsl).rhythm([1])};
+~funcs['a'][0] = {PZ_layer(~bass_random_dbsl).rhythm([12])};
 
 // minimal version (other):
 ~funcs['a'][0] = {PZ_layer(~bass_random).rhythm([2])};
@@ -42,9 +42,9 @@ b.beats = 1;
 ~funcs['b'][0] = {PZ_layer(~transposer, ~buffers['dbj'][(9..15).choose], 1, (0..1).choose, (1**(1/12)), 1).rhythm(1)};
 
 t=TempoClock.default
-t.tempo=400/60
+t.tempo=120/60
 // stop all
-~funcs['a'].do{|f, i| ~funcs['a'][i] = ();}
+~funcs['a'].do{|f, i| ~funcs['a' ][i] = ();}
 ~funcs['b'].do{|f, i| ~funcs['b'][i] = ();}
 
 //////////////////////////////////
@@ -66,9 +66,9 @@ y.release //stop
 //////////////////////////////////
 
 /////// minimal beat:
-t.tempo=0.2
+t.tempo=2.2
 // arguments are: buffer, out channel, attack, releasel, amp, rate
-~funcs['a'][0] = {PZ_layer(~alarmclock, ~buffers['radio'][1], 0.rrand(8), 0.1.rrand(0.3), 0.01, 0.5, 1.rrand(3)).rhythm(0.rrand(2),0,0,0)};
+~funcs['a'][0] = {PZ_layer(~alarmclock, ~buffers['radio'][1], 0.rrand(9), 0.1.rrand(0.3), 0.01, 0.5, 1.rrand(3)).rhythm(0.rrand(2),0,0,0)};
 
 ~funcs['a'][1] = {PZ_layer(~alarmclock, ~buffers['radio'][1], 0.rrand(8), 0.01, 0.1.rrand(0.3), 0.5, 1.rrand(3)).rhythm(0.rrand(1), [0.rrand(2)], 0, [0,0,0.rrand(2)])};
 

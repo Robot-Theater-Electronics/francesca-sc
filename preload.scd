@@ -99,7 +99,7 @@ s.sync;
 
 ~bass_random_dbs = { {PlayBuf.ar(1, ~buffers['dbs'][(1..9).choose], 1, doneAction: 2)}.play(s, (0..9).choose) };
 
-~bass_random_dbsl = { {PlayBuf.ar(1, ~buffers['dbsl'][(1..8).choose], 1, doneAction: 2)}.play(s, (0..8).choose) };
+~bass_random_dbsl = { {PlayBuf.ar(1, ~buffers['dbsl'][(1..8).choose], 1, doneAction: 2)}.play(s, (1..9).choose) };
 
 ~bass_random = { {PlayBuf.ar(1, ~buffers['dbplukk'][(1..22).choose], 1, doneAction: 2)}.play(s, (0..9).choose) };
 
